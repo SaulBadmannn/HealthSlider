@@ -6,49 +6,66 @@ using UnityEngine.UI;
 public class ChangeHealth : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
+
     private float _targetValue;
     private float _changeValueStep = 10f;
     private float _changeStep = 0.3f;
     private float _waitStep = 0.02f;
+    private bool _isHealthChanging = false;
+    private float _sliderValue = 50f;
+
 
     private void Start()
     {
-        _slider.value = 50f;
+        _slider.value = _sliderValue;
     }
 
     public void GetHeal()
     {
-        var heal = IsHealing();
+        _targetValue = _sliderValue + _changeValueStep;
 
-        StartCoroutine(heal);
+        if (_isHealthChanging == false)
+        {
+            var changeHealth = ChangingHealth();
+            StartCoroutine(changeHealth);
+        }
+        
     }
 
     public void GetDamage()
     {
-        var dealtDamage = IsDealtDamage();
+        _targetValue = _sliderValue - _changeValueStep;
 
-        StartCoroutine(dealtDamage);
+        if (_isHealthChanging == false)
+        {
+            var changeHealth = ChangingHealth();
+            StartCoroutine(changeHealth);
+        }
+            
     }
 
-    private IEnumerator IsHealing()
+    private IEnumerator ChangingHealth()
     {
-        _targetValue = _slider.value + _changeValueStep;
+        _isHealthChanging = true;
+        _sliderValue = _targetValue;
 
-        while (_slider.value < _targetValue)
+        if (_slider.value < _targetValue)
         {
-            _slider.value = Mathf.MoveTowards(_slider.value, _targetValue, _changeStep);
-            yield return new WaitForSeconds(_waitStep);
+            while (_slider.value < _targetValue)
+            {
+                _slider.value = Mathf.MoveTowards(_slider.value, _targetValue, _changeStep);
+                yield return new WaitForSeconds(_waitStep);
+            }
         }
-    }
-
-    private IEnumerator IsDealtDamage()
-    {
-        _targetValue = _slider.value - _changeValueStep;
-
-        while (_slider.value > _targetValue)
+        else
         {
-            _slider.value = Mathf.MoveTowards(_slider.value, _targetValue, _changeStep);
-            yield return new WaitForSeconds(_waitStep);
+            while (_slider.value > _targetValue)
+            {
+                _slider.value = Mathf.MoveTowards(_slider.value, _targetValue, _changeStep);
+                yield return new WaitForSeconds(_waitStep);
+            }
         }
+
+        _isHealthChanging = false;
     }
 }
