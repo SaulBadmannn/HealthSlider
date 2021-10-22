@@ -13,7 +13,8 @@ public class ChangeHealth : MonoBehaviour
     private float _waitStep = 0.02f;
     private bool _isHealthChanging = false;
     private float _sliderValue = 50f;
-
+    private float _maxValueSlider = 100f;
+    private float _minValueSlider = 0f;
 
     private void Start()
     {
@@ -22,7 +23,12 @@ public class ChangeHealth : MonoBehaviour
 
     public void GetHeal()
     {
-        _targetValue = _sliderValue + _changeValueStep;
+        if(_targetValue < _maxValueSlider)
+        {
+            _targetValue = _sliderValue + _changeValueStep;
+        }
+        
+        _sliderValue = _targetValue;
 
         if (_isHealthChanging == false)
         {
@@ -34,20 +40,23 @@ public class ChangeHealth : MonoBehaviour
 
     public void GetDamage()
     {
-        _targetValue = _sliderValue - _changeValueStep;
+        if(_targetValue > _minValueSlider)
+        {
+            _targetValue = _sliderValue - _changeValueStep;
+        }
+
+        _sliderValue = _targetValue;
 
         if (_isHealthChanging == false)
         {
             var changeHealth = ChangingHealth();
             StartCoroutine(changeHealth);
-        }
-            
+        }       
     }
 
     private IEnumerator ChangingHealth()
     {
         _isHealthChanging = true;
-        _sliderValue = _targetValue;
 
         if (_slider.value < _targetValue)
         {
