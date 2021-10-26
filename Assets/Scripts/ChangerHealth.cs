@@ -6,29 +6,33 @@ using UnityEngine.UI;
 public class ChangerHealth : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
+    [SerializeField] private Player player;
 
     private float _targetValue;
     private float _changeValueStep = 10f;
     private float _changeStep = 0.3f;
     private float _waitStep = 0.02f;
     private bool _isHealthChanging = false;
-    private float _playerHealth = 50f;
+    private float _sliderValue;
     private float _maxValueSlider = 100f;
     private float _minValueSlider = 0f;
 
     private void Start()
     {
-        _slider.value = _playerHealth;
+        _sliderValue = player.GetHealth();
+        _slider.value = _sliderValue;
+        _targetValue = _sliderValue;
     }
 
     public void GetHeal()
     {
         if(_targetValue < _maxValueSlider)
         {
-            _targetValue = _playerHealth + _changeValueStep;
+            _targetValue = _sliderValue + _changeValueStep;
         }
         
-        _playerHealth = _targetValue;
+        _sliderValue = _targetValue;
+        player.SetHealth(_sliderValue);
 
         if (_isHealthChanging == false)
         {
@@ -40,12 +44,14 @@ public class ChangerHealth : MonoBehaviour
 
     public void GetDamage()
     {
+        
         if(_targetValue > _minValueSlider)
         {
-            _targetValue = _playerHealth - _changeValueStep;
+            _targetValue = _sliderValue - _changeValueStep;
         }
 
-        _playerHealth = _targetValue;
+        _sliderValue = _targetValue;
+        player.SetHealth(_sliderValue);
 
         if (_isHealthChanging == false)
         {
