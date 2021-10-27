@@ -385,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 80
+  _changerSliderValue: {fileID: 1149719903}
 --- !u!1 &736375381
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,7 +588,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slider: {fileID: 0}
-  player: {fileID: 0}
 --- !u!1 &1047570306
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,8 +748,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1149719903}
-        m_MethodName: GetHeal
+      - m_Target: {fileID: 697417728}
+        m_MethodName: TryGetHeal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -899,7 +899,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slider: {fileID: 1149719902}
-  player: {fileID: 697417728}
 --- !u!1 &1200897262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,8 +1064,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1149719903}
-        m_MethodName: GetDamage
+      - m_Target: {fileID: 697417728}
+        m_MethodName: TryGetDamage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
