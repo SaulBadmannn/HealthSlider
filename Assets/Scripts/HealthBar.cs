@@ -7,20 +7,20 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
     [SerializeField] private Player _player;
+    [SerializeField] private float _changeStep;
 
-    private float _changeStep = 0.3f;
     private float _waitStep = 0.02f;
     private bool _isValueChanging = false;
     private float _targetValue;
 
     private void OnEnable()
     {
-        _player.ChangingHealth += ChangeValue;
+        _player.HealthChanged += ChangeValue;
     }
 
     private void OnDisable()
     {
-        _player.ChangingHealth -= ChangeValue;
+        _player.HealthChanged -= ChangeValue;
     }
 
     private void Start()

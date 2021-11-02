@@ -14,14 +14,20 @@ public class Player : MonoBehaviour
 
     public float Health => _health;
 
-    public event UnityAction<float> ChangingHealth;
+    public event UnityAction<float> HealthChanged;
 
     public void TryGetHeal()
     {
         if(_health < _maxHealth)
         {
             _health += _changeHealthStep;
-            ChangingHealth?.Invoke(_health);
+
+            if (_health > _maxHealth)
+            {
+                _health = _maxHealth;
+            }
+
+            HealthChanged?.Invoke(_health);
         } 
     }
 
@@ -30,7 +36,13 @@ public class Player : MonoBehaviour
         if(_health > _minHealth)
         {
             _health -= _changeHealthStep;
-            ChangingHealth?.Invoke(_health);
+
+            if (_health < _minHealth)
+            {
+                _health = _minHealth;
+            }
+
+            HealthChanged?.Invoke(_health);
         }
     }
 }
