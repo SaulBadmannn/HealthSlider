@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     public float Health => _health;
 
-    public event UnityAction<float> HealthChanged;
+    public event UnityAction<float, float> HealthChanged;
 
     public void TryGetHeal()
     {
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
                 _health = _maxHealth;
             }
 
-            HealthChanged?.Invoke(_health);
+            HealthChanged?.Invoke(_health, _maxHealth);
         } 
     }
 
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
                 _health = _minHealth;
             }
 
-            HealthChanged?.Invoke(_health);
+            HealthChanged?.Invoke(_health, _maxHealth);
         }
     }
 }

@@ -28,9 +28,10 @@ public class HealthBar : MonoBehaviour
         _slider.value = _player.Health;
     }
 
-    public void ChangeValue(float targetValue)
+    public void ChangeValue(float targetValue, float maxValue)
     {
         _targetValue = targetValue;
+        _slider.maxValue = maxValue;
 
         if (_isValueChanging == false)
         {
